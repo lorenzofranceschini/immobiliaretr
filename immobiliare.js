@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 
 const PORT=3000;
+app.use(express.json())
 // PARTE LOGIN
 
 
@@ -38,7 +39,7 @@ app.post('/login', (req, res) => {
 
 
 
-app.use(express.json())
+
 const annunciocasa=[
     {
     id:1,
