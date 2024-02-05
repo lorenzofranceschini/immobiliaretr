@@ -3,8 +3,6 @@ const app = express()
 
 const PORT=3000;
 app.use(express.json())
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 // PARTE LOGIN
 
 const UTENTI = [
@@ -24,7 +22,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  const user = UTENTI.find(user => user.username === username && user.password === password);
+  const user = UTENTI.find(user => user.username === UTENTI.username && user.password === UTENTI.password);
 
   if (user) {
     res.send('Accesso Eseguito!');
@@ -32,6 +30,10 @@ app.post('/login', (req, res) => {
     res.send('Username/Password incorretti!!');
   }
 });
+app.get('/utenti',(req,res)=>{
+  console.log("ricevuta richiesta di tipo get a / ")
+  res.json(UTENTI)
+})
 
 
 // PARTE ANNUNCI
@@ -54,6 +56,12 @@ const annunciocasa=[
     res.json(annunciocasa)
 })
 
+app.get('/annunci',(req,res)=>{
+  console.log("ricevuta richiesta di tipo get a / ")
+  res.json(annunciocasa)
+})
+
+
   app.delete('/annunci/:id', (req, res) => {
     const id = req.params.id;
     const index = annunciocasa.findIndex((annunciocasa, index) => index === parseInt(id));
@@ -66,8 +74,8 @@ const annunciocasa=[
   });
 
   app.post('/annunci', (req, res) => {
-    const { id,indirizzo, dim, desc, Nstanze, prezzo, Nbagni, Nfoto } = req.body;
-    const newannuncio = { id,indirizzo, dim, desc, Nstanze, prezzo, Nbagni, Nfoto };
+    const { id ,indirizzo, dim, desc, Nstanze, prezzo, Nbagni, Nfoto } = req.body;
+    const newannuncio = { id ,indirizzo, dim, desc, Nstanze, prezzo, Nbagni, Nfoto };
     annunciocasa.push(newannuncio);
     res.status(201).json({ message: 'Annuncio creato!' });
   });
@@ -75,7 +83,7 @@ const annunciocasa=[
 
   app.delete('/annunci/:id', (req, res) => {
     const id = req.params.id;
-    const index = annunciocasa.findIndex((annunciocasa, index) => index === parseInt(id));
+    const index = annunciocasa.findIndex((index) => index === parseInt(id));
     if (index !== -1) {
       annunciocasa.splice(index, 1);
       res.status(200).json({ message: `Annuncio con ID ${id} è stato rimosso.` });
