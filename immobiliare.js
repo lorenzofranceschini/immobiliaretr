@@ -72,7 +72,7 @@ const annunciocasa=[
     const { id,indirizzo, dim, desc, Nstanze, prezzo, Nbagni, Nfoto } = req.body;
     const newannuncio = { id,indirizzo, dim, desc, Nstanze, prezzo, Nbagni, Nfoto };
     annunciocasa.push(newannuncio);
-    res.status(201).json({ message: 'House posted for sale successfully!' });
+    res.status(201).json({ message: 'Annuncio creato!' });
   });
 
 
