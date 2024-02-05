@@ -58,7 +58,7 @@ const annunciocasa=[
 
   app.delete('/annunci/:id', (req, res) => {
     const id = req.params.id;
-    const index = annunciocasa.findIndex((announcement, index) => index === parseInt(id));
+    const index = annunciocasa.findIndex((annunciocasa, index) => index === parseInt(id));
     if (index !== -1) {
       casa.splice(index, 1);
       res.status(200).json({ message: `L'annuncio con ID ${id} è stato rimosso!!` });
@@ -68,11 +68,13 @@ const annunciocasa=[
   });
 
   app.post('/annunci', (req, res) => {
-    const { indirizzo, dim, desc, Nstanze, prezzo, Nbagni, Nfoto } = req.body;
-    const newannuncio = { indirizzo, dim, desc, Nstanze, prezzo, Nbagni, Nfoto };
+    const { id,indirizzo, dim, desc, Nstanze, prezzo, Nbagni, Nfoto } = req.body;
+    const newannuncio = { id,indirizzo, dim, desc, Nstanze, prezzo, Nbagni, Nfoto };
     annunciocasa.push(newannuncio);
     res.status(201).json({ message: 'House posted for sale successfully!' });
   });
+
+
   app.delete('/annunci/:id', (req, res) => {
     const id = req.params.id;
     const index = annunciocasa.findIndex((annunciocasa, index) => index === parseInt(id));
