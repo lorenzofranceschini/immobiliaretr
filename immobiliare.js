@@ -58,7 +58,7 @@ const annunciocasa=[
 
   app.delete('/annunci/:id', (req, res) => {
     const id = req.params.id;
-    const index = casa.findIndex((announcement, index) => index === parseInt(id));
+    const index = annunciocasa.findIndex((announcement, index) => index === parseInt(id));
     if (index !== -1) {
       casa.splice(index, 1);
       res.status(200).json({ message: `L'annuncio con ID ${id} è stato rimosso!!` });
