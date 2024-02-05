@@ -3,8 +3,9 @@ const app = express()
 
 const PORT=3000;
 app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 // PARTE LOGIN
-
 
 const UTENTI = [
   { username: 'user1', password: 'password1' },
@@ -23,26 +24,22 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  const user = users.find(user => user.username === username && user.password === password);
+  const user = UTENTI.find(user => user.username === username && user.password === password);
 
   if (user) {
     res.send('Accesso Eseguito!');
   } else {
-    res.send('Username/Password incorretti!!!!');
+    res.send('Username/Password incorretti!!');
   }
 });
-
 
 
 // PARTE ANNUNCI
 
 
-
-
-
 const annunciocasa=[
     {
-    id:1,
+    id:"1",
     indirizzo:"via placeholder",
     prezzo:350000,
     dim:"800",
