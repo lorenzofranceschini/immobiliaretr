@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 
+const PORT=3000;
 // PARTE LOGIN
 
 
@@ -32,16 +33,7 @@ app.post('/login', (req, res) => {
 
 
 
-
 // PARTE ANNUNCI
-
-
-
-
-
-
-
-
 
 
 
