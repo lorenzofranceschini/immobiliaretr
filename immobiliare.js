@@ -11,15 +11,6 @@ const annunciocasa=[
     Nstanze:8,
     Nbagni:3,
     Nfoto:4
-    },
-    {
-    id:2,
-    indirizzo:"piazza 123",
-    prezzo:270000,
-    dim:500,
-    Nstanze:8,
-    Nbagni:1,
-    Nfoto:1,
     }
 ]
 
@@ -47,7 +38,7 @@ const annunciocasa=[
   });
   app.delete('/annunci/:id', (req, res) => {
     const id = req.params.id;
-    const index = annunciocasa.findIndex((annuncio, index) => index === parseInt(id));
+    const index = annunciocasa.findIndex((annunciocasa, index) => index === parseInt(id));
     if (index !== -1) {
       annunciocasa.splice(index, 1);
       res.status(200).json({ message: `Annuncio con ID ${id} è stato rimosso.` });
