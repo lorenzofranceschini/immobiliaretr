@@ -1,6 +1,51 @@
 const express = require('express')
 const app = express()
 
+// PARTE LOGIN
+
+
+const UTENTI = [
+  { username: 'user1', password: 'password1' },
+  { username: 'user2', password: 'password2' }
+];
+app.get('/login', (req, res) => {
+  res.send(`
+    <form method="POST" action="/login">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+  `);
+});
+
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find(user => user.username === username && user.password === password);
+
+  if (user) {
+    res.send('Accesso Eseguito!');
+  } else {
+    res.send('Username/Password incorretti!!!!');
+  }
+});
+
+
+
+
+// PARTE ANNUNCI
+
+
+
+
+
+
+
+
+
+
+
+
 app.use(express.json())
 const annunciocasa=[
     {
