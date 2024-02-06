@@ -1,0 +1,7 @@
+{
+  "/not-found": "app/not-found.js",
+  "/modifica/page": "app/modifica/page.js",
+  "/gest/page": "app/gest/page.js",
+  "/rimuovi/page": "app/rimuovi/page.js",
+  "/gestionale/page": "app/gestionale/page.js"
+}

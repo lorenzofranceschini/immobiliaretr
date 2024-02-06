@@ -16,7 +16,7 @@ export default function Home() {
       // Store token in local storage or session storage
       localStorage.setItem('token', token);
       // Redirect to dashboard or desired page upon successful login
-      window.location.href = '/sito';
+      window.location.href = '/home';
     } catch (error) {
       setError(error.response.data.message);
     }
