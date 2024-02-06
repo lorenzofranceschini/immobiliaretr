@@ -2,9 +2,11 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json({ limit: '100mb' })); // Limit request size to 10MB
 app.use(express.json());
 
 let users = [];
@@ -12,7 +14,6 @@ let houses = [];
 
 const passphrase = 'passphrase';
 
-// Function to read user data from file
 function readUserData() {
   fs.readFile('users.json', 'utf8', (err, data) => {
     if (err) {
@@ -34,7 +35,6 @@ function readHouseData() {
   });
 }
 
-// Read user and house data from file on startup
 readUserData();
 readHouseData();
 
@@ -78,7 +78,6 @@ app.post('/register', (req, res) => {
 
   users.push({ email, password });
 
-  // Write users data to the filesystem
   fs.writeFile('users.json', JSON.stringify(users), (err) => {
     if (err) {
       console.error('Error writing users data to file:', err);
@@ -92,6 +91,7 @@ app.post('/create-house', authenticateToken, (req, res) => {
   const { image, name, bathrooms, location, superficie, price } = req.body;
 
   const newHouse = {
+    id: Math.floor(Math.random() * 100000000),
     image,
     name,
     bathrooms,
@@ -102,7 +102,6 @@ app.post('/create-house', authenticateToken, (req, res) => {
 
   houses.push(newHouse);
 
-  // Write houses data to the filesystem
   fs.writeFile('houses.json', JSON.stringify(houses), (err) => {
     if (err) {
       console.error('Error writing houses data to file:', err);
@@ -111,6 +110,56 @@ app.post('/create-house', authenticateToken, (req, res) => {
     res.status(201).json({ message: 'House created successfully' });
   });
 });
+
+app.put('/houses/:id', authenticateToken, (req, res) => {
+  const houseId = req.params.id;
+  const { image, name, bathrooms, location, superficie, price } = req.body;
+
+  const houseIndex = houses.findIndex(house => house.id == houseId);
+
+  if (houseIndex === -1) {
+    return res.status(404).json({ message: 'House not found' });
+  }
+
+  houses[houseIndex] = {
+    id: houseId,
+    image,
+    name,
+    bathrooms,
+    location,
+    superficie,
+    price
+  };
+
+  fs.writeFile('houses.json', JSON.stringify(houses), (err) => {
+    if (err) {
+      console.error('Error writing houses data to file:', err);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+    res.status(200).json({ message: 'House updated successfully' });
+  });
+});
+
+app.delete('/houses/:id', authenticateToken, (req, res) => {
+  const houseId = req.params.id;
+
+  const houseIndex = houses.findIndex(house => house.id == houseId);
+
+  if (houseIndex === -1) {
+    return res.status(404).json({ message: 'House not found' });
+  }
+
+  houses.splice(houseIndex, 1);
+
+  fs.writeFile('houses.json', JSON.stringify(houses), (err) => {
+    if (err) {
+      console.error('Error writing houses data to file:', err);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+    res.status(200).json({ message: 'House deleted successfully' });
+  });
+});
+
 
 app.get('/houses', (req, res) => {
   res.json(houses);

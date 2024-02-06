@@ -1,5 +1,6 @@
 "use client";
 import axios from 'axios';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 const Sito: React.FC = () => {
@@ -9,11 +10,7 @@ const Sito: React.FC = () => {
     const fetchHouses = async () => {
       try {
         const response = await axios.get('http://localhost:3003/houses');
-        const decodedHouses = response.data.map((house) => ({
-          ...house,
-          image: `data:image/jpeg;base64,${house.image}`, // Decode base64 image
-        }));
-        setHouses(decodedHouses);
+        setHouses(response.data);
       } catch (error) {
         console.error('Error fetching houses:', error);
       }
@@ -25,8 +22,11 @@ const Sito: React.FC = () => {
   return (
     <div className="w-full h-screen bg-white">
       <div className="h-4/6 w-full bg-cyan-800">
-        <div className="flex justify-center items-center">
+        <div className="flex justify-between items-center px-4">
           <img src="/Logo_Sito.png" className="mt-[50px]" />
+          <Link href="/gest">
+            <button className="bg-indigo-500 text-white px-3 py-1.5 rounded-md shadow-md hover:bg-indigo-600">Vai al Gestionale</button>
+          </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
           {houses.map((house) => (

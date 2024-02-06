@@ -19,6 +19,9 @@ const gest: React.FC = () => {
         <div className='border border-stone-600 ml-30px rounded-[20px] bg-white text-cyan-600 shadow-[10px] font-bold text-[22px] p-9' >
             <a href="/rimuovi">Elimina</a>
         </div>
+        <div className='border border-stone-600 ml-30px rounded-[20px] bg-white text-cyan-600 shadow-[10px] font-bold text-[22px] p-9' >
+            <a href="/sito">Home</a>
+        </div>
       </div>
       
       </div>
